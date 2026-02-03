@@ -61,7 +61,8 @@ def ringkasan_mingguan():
     print("="*40)
     if not catatan:
         print("Belum ada catatan belajar.")
-        print("="*40 + "\n")
+        print("="*40)
+        input("Tekan Enter untuk lanjut...")
         return
 
     today = datetime.date.today()
@@ -79,7 +80,8 @@ def ringkasan_mingguan():
 
     if not minggu:
         print("Tidak ada catatan dalam 7 hari terakhir.")
-        print("="*40 + "\n")
+        print("="*40)
+        input("Tekan Enter untuk lanjut...")
         return
 
     total_menit = sum(c.get('durasi_menit', 0) for _, c in minggu)
@@ -97,7 +99,8 @@ def ringkasan_mingguan():
         j = menit // 60
         mm = menit % 60
         print(f"  • {m}: {menit} menit ({j} jam {mm} menit)")
-    print("="*40 + "\n")
+    print("="*40)
+    input("Tekan Enter untuk lanjut...")
 
 def lihat_catatan():
     print("\n" + "="*40)
@@ -114,6 +117,25 @@ def lihat_catatan():
         print(f"   Durasi: {c['durasi_menit']} menit")
         print(f"   Tanggal: {c['tanggal']}")
         print("-" * 40)
+    
+    # Opsi untuk menghapus catatan
+    while True:
+        pilih = input("Hapus catatan? (y/n): ").strip().lower()
+        if pilih == 'y':
+            while True:
+                try:
+                    nomor = int(input("Nomor catatan yang dihapus: "))
+                    if 1 <= nomor <= len(catatan):
+                        catatan.pop(nomor - 1)
+                        simpan_data()
+                        print("✓ Catatan berhasil dihapus!\n")
+                        break
+                    else:
+                        print(f"❌ Nomor harus antara 1-{len(catatan)}")
+                except ValueError:
+                    print("❌ Masukkan nomor yang valid")
+        else:
+            break
     print()
 
 def total_waktu():
@@ -123,7 +145,9 @@ def total_waktu():
     print("\n" + "="*40)
     print(f"Total waktu belajar: {total} menit")
     print(f"({jam} jam {sisa_menit} menit)")
-    print("="*40 + "\n")
+    print("="*40)
+    input("Tekan Enter untuk lanjut...")
+    print()
 
 def menu():
     print("\n╔════════════════════════════════════════╗")
